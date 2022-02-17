@@ -14,7 +14,7 @@ export const Header = () => {
         <div className="Header">
             <h1>React Hooks</h1>
             <button type="button" onClick={handleClick}>{darkMode ? 'DarkMode' : 'lightMode'}</button>
-            <button type="button" onClick={()=> setDarkMode(!darkMode ) }>{darkMode ? 'DarkMode2' : 'lightMode2'}</button>
+            {/* <button type="button" onClick={()=> setDarkMode(!darkMode ) }>{darkMode ? 'DarkMode2' : 'lightMode2'}</button> */}
 
         </div>
     )

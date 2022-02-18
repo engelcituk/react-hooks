@@ -1,10 +1,12 @@
-import { useState, useEffect, useReducer, useMemo, useRef, useCallback } from 'react'
+import { useState, useReducer, useMemo, useRef, useCallback } from 'react'
 import Search from './Search'
+import useCharacters from '../hooks/useCharacters';
 
 const initialState = {
     favorites: []
 }
 
+const API_URL = 'https://rickandmortyapi.com/api/character'
 const favoriteReducer = (state, action ) => {
     switch (action.type){
         case 'ADD_TO_FAVORITE':
@@ -18,19 +20,12 @@ const favoriteReducer = (state, action ) => {
 }
 
 const Characters = () => {
-    const [characters, setCharacters ] = useState([])
+
     const [ favorites, dispatch ] = useReducer(favoriteReducer, initialState)
     const [ search , setSearch ] = useState('')
     const searchInput = useRef(null)
 
-    //usa dos parametros, una funcion anonima donde está la logica
-    //el segundo la variable que va estar escuchando en dado caso que tenga un cambio
-    useEffect( () => {
-        fetch('https://rickandmortyapi.com/api/character')
-        .then( response => response.json() )
-        .then( data => setCharacters( data.results ) )
-    }, []) //cuando no tiene nada que escuchar se le pasa como 2do parametro un arreglo vacio []
-
+    const characters = useCharacters(API_URL)
     const handleClick = favorite => {
         dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
     }

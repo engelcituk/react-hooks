@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useMemo } from 'react'
+import { useState, useEffect, useReducer, useMemo, useRef } from 'react'
 
 const initialState = {
     favorites: []
@@ -20,6 +20,7 @@ const Characters = () => {
     const [characters, setCharacters ] = useState([])
     const [ favorites, dispatch ] = useReducer(favoriteReducer, initialState)
     const [ search , setSearch ] = useState('')
+    const searchInput = useRef(null)
 
     //usa dos parametros, una funcion anonima donde está la logica
     //el segundo la variable que va estar escuchando en dado caso que tenga un cambio
@@ -33,9 +34,8 @@ const Characters = () => {
         dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
     }
 
-    const handleSearch= (event) => {
-        console.log(event.target.value )
-        setSearch( event.target.value )
+    const handleSearch= () => {
+        setSearch( searchInput.current.value )
     }
 
     /*const filteredCharacters = characters.filter( (user) => {
@@ -67,7 +67,7 @@ const Characters = () => {
                 ))
             }
             <div className="input-group mb-3">
-                <input type="text" className="form-control" value={search} onChange={handleSearch}/>
+                <input type="text" className="form-control" value={search} onChange={handleSearch} ref={searchInput}/>
                 {/* <button className="btn btn-primary" type="button" id="button-addon2" onClick={handleSearch}>Buscar</button> */}
             </div>
             <h2>Personajes api</h2>
